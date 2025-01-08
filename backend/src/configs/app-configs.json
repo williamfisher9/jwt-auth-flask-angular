@@ -1,0 +1,10 @@
+{
+  "SECRET_KEY": "qreqtwesfdsfdsgrwerwerygsdfw233rwrwterewr4333erewtgdsfd12254rwtrgasddfd342",
+  "JWT_SECRET_KEY": "qiuewtfkjdsmcxzbvoiwerfkdsvnmadsk8roiewo231oi423uewqurksavmncb",
+  "JWT_EXPIRATION_MILLISECONDS": 60000,
+  "SQLALCHEMY_DATABASE_URI": "mysql+mysqlconnector://root:root123@localhost:3306/users_jwt",
+  "SQLALCHEMY_TRACK_MODIFICATIONS": false,
+  "LOGGING_DIRECTORY": "C://Users//william.fisher//Desktop//app_files//logs",
+  "UPLOAD_DIRECTORY": "C://Users//william.fisher//Desktop//app_files//images",
+  "MAX_CONTENT_LENGTH": 16000000
+}
