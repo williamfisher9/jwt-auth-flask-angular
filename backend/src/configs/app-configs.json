@@ -6,5 +6,6 @@
   "SQLALCHEMY_TRACK_MODIFICATIONS": false,
   "LOGGING_DIRECTORY": "C://Users//william.fisher//Desktop//app_files//logs",
   "UPLOAD_DIRECTORY": "C://Users//william.fisher//Desktop//app_files//images",
-  "MAX_CONTENT_LENGTH": 16000000
+  "MAX_CONTENT_LENGTH": 16000000,
+  "APP_PORT": 8080
 }

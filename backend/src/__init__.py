@@ -29,4 +29,5 @@ if __name__ == "__main__":
     with app.app_context():
         initialize_database()
 
-    app.run(debug=True, port=8080)
+    with open("configs\\app-configs.json", "r") as props_file:
+        app.run(debug=True, port=json.load(props_file)["APP_PORT"])
