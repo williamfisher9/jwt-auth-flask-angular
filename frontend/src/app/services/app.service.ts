@@ -24,5 +24,10 @@ export class AppService {
   sendLoginRequest(loginRequest : LoginRequest) : Observable<any>{
     return this.http.post("http://localhost:8080/api/v1/users/login", {username: loginRequest.username, password: loginRequest.password}).pipe(map(response => response));
   }
+
+  getUserDetails(id : number) : Observable<any> {
+    return this.http.get(`http://localhost:8080/api/v1/users/${id}`, {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}})
+    .pipe(map(res => res))
+  }
 }
 

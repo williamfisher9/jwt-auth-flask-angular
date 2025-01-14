@@ -25,6 +25,9 @@ export class LoginComponent {
         if(res.status == 200){
           console.log(res)
           this.responseError = ''
+          window.localStorage.setItem('token', res.message.token)
+          window.localStorage.setItem('user_id', res.message.user_id)
+          this.router.navigate([`/users/${window.localStorage.getItem('user_id')}/home`])
         }
       },
       error: err => {
