@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, request
 from jsonschema.exceptions import ValidationError
 from jsonschema.validators import validate
+from sqlalchemy.exc import IntegrityError
 
+from src.messages.response_message import ResponseMessage
 from src.model.user import User
 from src.model.role import Role
 from src.extensions.extensions import bcrypt, db
@@ -26,9 +28,11 @@ def create_user():
         try:
             validate(instance=request_json, schema=user_register_request_schema)
         except ValidationError as e:
-            return jsonify(message=e.message)
+            response_message = ResponseMessage(e.message, 400).create_response_message()
+            return response_message, response_message['status']
         except Exception as e:
-            return jsonify(message=e.__repr__())
+            response_message = ResponseMessage(e.__repr__(), 400).create_response_message()
+            return response_message, response_message['status']
 
         user = User(request_json["username"],
                     request_json["first_name"],
@@ -43,10 +47,18 @@ def create_user():
 
         user.roles.extend(roles)
 
-        db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError as e:
+            response_message = ResponseMessage(f'{type(e).__name__}: username exists in the system', 409).create_response_message()
+            return response_message, response_message['status']
+        except Exception as e:
+            response_message = ResponseMessage(e.__repr__(), 400).create_response_message()
+            return response_message, response_message['status']
 
-        return jsonify(user=user.to_dict())
+        response_message = ResponseMessage(user, 201).create_response_message()
+        return response_message, response_message['status']
 
 @users_blueprint.route("/api/v1/users/login", methods=['POST'])
 def login_user():
@@ -56,18 +68,23 @@ def login_user():
         try:
             validate(instance=request_json, schema=user_login_request_schema)
         except ValidationError as e:
-            return jsonify(message=e.message)
+            response_message = ResponseMessage(e.message, 400).create_response_message()
+            return response_message, response_message['status']
         except Exception as e:
-            return jsonify(message=e.__repr__())
+            response_message = ResponseMessage(e.__repr__(), 400).create_response_message()
+            return response_message, response_message['status']
 
         user = User.query.filter_by(username=request_json['username']).first()
 
         if not user:
-            return jsonify(message="user was not found"), 404
+            response_message = ResponseMessage("user was not found", 404).create_response_message()
+            return response_message, response_message['status']
 
         if not bcrypt.check_password_hash(user.password, request_json['password']):
-            return jsonify(message="invalid username/password"), 404
+            response_message = ResponseMessage("invalid username/password", 403).create_response_message()
+            return response_message, response_message['status']
 
         token = create_access_token(identity=user.username)
 
-        return jsonify(token=token), 200
+        response_message = ResponseMessage(token, 200).create_response_message()
+        return response_message, response_message['status']
