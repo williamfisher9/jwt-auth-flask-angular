@@ -16,9 +16,13 @@ export class LoginComponent {
   username : string = 'hamza.hamdan@hotmail.com'
   password : string = '12345678'
 
-  responseError : string = ''
+  isLoading : boolean = false;
+
+  responseError : string = '';
 
   handleLoginRequest(){
+    this.isLoading = true;
+
     this.appService.sendLoginRequest({username: this.username, password : this.password})
     .subscribe({
       next: res => {
@@ -33,9 +37,11 @@ export class LoginComponent {
       error: err => {
         if (err.error.status != 201){
           console.log(err.error)
-          this.responseError = err.error.message
+          this.responseError = err.error.message;
+          this.isLoading = false;
         }
-      }
+      },
+      complete: () => {this.isLoading = false;}
     })
   }
 }

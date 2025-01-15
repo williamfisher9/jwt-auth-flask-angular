@@ -9,6 +9,7 @@ class User(db.Model):
     first_name = db.Column(db.String(20), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    profile_img_url = db.Column(db.String(50), nullable=True)
 
     roles = db.relationship("Role", secondary=UserRoles.__table__, back_populates="users")
 
@@ -34,5 +35,6 @@ class User(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "password": self.password,
+            "profile_img_url": self.profile_img_url,
             "roles": roles
         }

@@ -1,4 +1,11 @@
 <div class="page-container">
+
+    @if(this.isLoading){
+        <div class="loader-container">
+            <img src="assets/loading-icon.gif" alt="loading-icon"/>
+        </div>
+    }
+
     <div class="form-container">
         <div class="app-logo">
             <img src="assets/logo_img.png" alt="logo-img" style="height: 50px;"/>

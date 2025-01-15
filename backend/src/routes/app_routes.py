@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint, jsonify, request
 from jsonschema.exceptions import ValidationError
 from jsonschema.validators import validate
@@ -7,11 +9,13 @@ from src.messages.response_message import ResponseMessage
 from src.model.user import User
 from src.model.role import Role
 from src.extensions.extensions import bcrypt, db
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required
 
 from src.configs.json_schemas import user_register_request_schema, user_login_request_schema
 
 users_blueprint = Blueprint("users_blueprint", __name__)
+
+logger = logging.getLogger(__name__)
 
 @users_blueprint.route("/api/v1/users", methods=['GET'])
 @jwt_required()
@@ -51,6 +55,7 @@ def create_user():
             db.session.add(user)
             db.session.commit()
         except IntegrityError as e:
+            logger.error(e)
             response_message = ResponseMessage(f'{type(e).__name__}: username exists in the system', 409).create_response_message()
             return response_message, response_message['status']
         except Exception as e:
@@ -86,5 +91,17 @@ def login_user():
 
         token = create_access_token(identity=user.username)
 
-        response_message = ResponseMessage(token, 200).create_response_message()
+        response_message = ResponseMessage({"token": token, "user_id": user.id}, 200).create_response_message()
         return response_message, response_message['status']
+
+@users_blueprint.route("/api/v1/users/<id>", methods=['GET'])
+@jwt_required()
+def get_user_by_id(id):
+    user = User.query.filter_by(id=id).first()
+
+    if not user:
+        response_message = ResponseMessage("user was not found", 404).create_response_message()
+        return response_message, response_message['status']
+
+    response_message = ResponseMessage(user, 200).create_response_message()
+    return response_message, response_message['status']

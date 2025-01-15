@@ -11,6 +11,10 @@ from src.routes.app_routes import users_blueprint
 from src.configs.initial_data import initialize_database
 
 if __name__ == "__main__":
+    """
+    initializing the logger before creating flask app
+    to use logging library instead of app.logger
+    """
     initialize_logging_configs()
 
     logger = logging.getLogger(__name__)

@@ -4,6 +4,7 @@
     position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
     transition: width 0.3s;
+    z-index: 9999;
 }
 
 .menu-container:hover {

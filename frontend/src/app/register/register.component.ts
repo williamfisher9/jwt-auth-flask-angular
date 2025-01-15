@@ -22,8 +22,10 @@ export class RegisterComponent{
 
   responseError : string = '';
 
+  isLoading : boolean = false;
+
   handleRegisterRequest(){
-    console.log(this.emailAddress, this.firstName, this.lastName, this.password);
+    this.isLoading = true;
     this.appService.sendRegisterRequest({emailAddress: this.emailAddress, 
                                         firstName: this.firstName, 
                                         lastName: this.lastName, 
@@ -40,9 +42,11 @@ export class RegisterComponent{
       error: err => {
         if (err.error.status != 201){
           console.log(err.error)
-          this.responseError = err.error.message
+          this.responseError = err.error.message;
+          this.isLoading = false;
         }
-      }
+      },
+      complete: () => {this.isLoading = false;}
     })
   }
 
