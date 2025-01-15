@@ -1,0 +1,12 @@
+<div class="user-profile-container">
+    <p id="profile-name">{{user.first_name}}</p>
+    <img src={{user.profile_img_url}} id="profile-img" (click)="showProfileImgPicker()"/>
+</div>
+
+@if(showFilePicker){
+    <div class="file-picker-container">
+        <input type="file" id="profileImg" name="profileImg" accept="image/png, image/jpeg" (change)="handleFileChange($event)"/>
+        <input class="uploader-btn" type="button" value="UPLOAD" (click)="uploadSelectedFile()"/>
+        <input class="uploader-btn" type="button" value="CANCEL" (click)="closeFilePicker()"/>
+    </div>
+}

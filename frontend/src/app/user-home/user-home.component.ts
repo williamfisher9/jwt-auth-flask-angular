@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../services/app.service';
 import { User } from '../interface/user';
+import { UserProfileComponent } from "../user-profile/user-profile.component";
 
 @Component({
   selector: 'app-user-home',
   standalone: true,
-  imports: [],
+  imports: [UserProfileComponent],
   templateUrl: './user-home.component.html',
   styleUrl: './user-home.component.css'
 })
