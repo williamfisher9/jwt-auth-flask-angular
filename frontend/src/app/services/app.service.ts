@@ -29,5 +29,14 @@ export class AppService {
     return this.http.get(`http://localhost:8080/api/v1/users/${id}`, {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}})
     .pipe(map(res => res))
   }
+
+  updateProfileImage(id:number, file:File) : Observable<any>{
+    const data = new FormData();
+    data.append("id", id.toString());
+    data.append("file", file, file.name);
+    
+    return this.http.post(`http://localhost:8080/api/v1/users/profile-image`, data, {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}})
+    .pipe(map(res => res))
+  }
 }
 

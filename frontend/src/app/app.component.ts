@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuComponent } from "./menu/menu.component";
 import { RouterOutlet } from '@angular/router';
 
@@ -10,6 +10,6 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
+export class AppComponent{
 
 }

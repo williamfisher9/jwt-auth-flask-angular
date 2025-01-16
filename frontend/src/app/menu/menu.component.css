@@ -1,14 +1,16 @@
 .menu-container {
     width: 70px;
     height: 100%;
+    top: 0;
+    left: 0;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
     transition: width 0.3s;
-    z-index: 9999;
+    z-index: 9900;
 }
 
 .menu-container:hover {
-    width: 200px;
+    width: 230px;
 
     #logo-title {
         display: flex;
@@ -63,10 +65,20 @@
 .menu-item > .menu-item-title {
     text-transform: uppercase;
     display: none;
+    transition: scale 0.3s;
 }
 
 .menu-item-icon {
    margin: 0.25em;
    padding: .25em 0.25em;
+   transition: scale 0.3s;
 }
 
+.menu-item:hover {
+    background-color: var(--golden-color);
+    color: #000;
+
+    .menu-item-title, .menu-item-icon {
+        scale: 1.2;
+    }
+}

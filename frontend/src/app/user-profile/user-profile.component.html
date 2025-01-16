@@ -1,12 +1,35 @@
 <div class="user-profile-container">
-    <p id="profile-name">{{user.first_name}}</p>
-    <img src={{user.profile_img_url}} id="profile-img" (click)="showProfileImgPicker()"/>
+    <div class="menu-logo" routerLink="/">
+        <img src="assets/logo_img.png" height="40px" alt="logo_img" id="logo-img" />
+        <img src="assets/logo_title.png" height="40px" alt="logo_title" id="logo-title" />
+    </div>
+
+    <div class="profile-details">
+        <p id="profile-name">{{user.first_name}}</p>
+        <img [src]="user.profile_img_name == null ? 'assets/avatar.jpg' : user.profile_img_name" id="profile-img" (click)="showProfileImgPicker()"/>
+    </div>
 </div>
+
+@if(this.isLoading){
+    <div class="loader-container">
+        <img src="assets/loading-icon.gif" alt="loading-icon"/>
+    </div>
+}
 
 @if(showFilePicker){
     <div class="file-picker-container">
-        <input type="file" id="profileImg" name="profileImg" accept="image/png, image/jpeg" (change)="handleFileChange($event)"/>
-        <input class="uploader-btn" type="button" value="UPLOAD" (click)="uploadSelectedFile()"/>
-        <input class="uploader-btn" type="button" value="CANCEL" (click)="closeFilePicker()"/>
+        <div class="file-picker-control">
+            <input type="file" id="profileImg" name="profileImg" accept="image/png, image/jpeg" (change)="handleFileChange($event)"/>
+            <input class="uploader-btn" type="button" value="UPLOAD" (click)="uploadSelectedFile()"/>
+            <input class="uploader-btn" type="button" value="CANCEL" (click)="closeFilePicker()"/>
+        </div>
+
+        @if(selectedFileUrl != ''){
+            <div class="file-picker-image">
+                <img src={{selectedFileUrl}} id="profile-img-preview"/>
+            </div>
+        }
+
+        <p class="file-picker-error">{{errorMessage}}</p>
     </div>
 }
