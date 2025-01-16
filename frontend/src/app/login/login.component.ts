@@ -1,17 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AppService } from '../services/app.service';
 import { FormsModule } from '@angular/forms';
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, MenuComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   constructor(private appService : AppService, private router : Router){}
+
+  ngOnInit(): void {
+    window.localStorage.clear()
+  }
 
   username : string = 'hamza.hamdan@hotmail.com'
   password : string = '12345678'
@@ -27,7 +32,6 @@ export class LoginComponent {
     .subscribe({
       next: res => {
         if(res.status == 200){
-          console.log(res)
           this.responseError = ''
           window.localStorage.setItem('token', res.message.token)
           window.localStorage.setItem('user_id', res.message.user_id)
@@ -36,7 +40,6 @@ export class LoginComponent {
       },
       error: err => {
         if (err.error.status != 201){
-          console.log(err.error)
           this.responseError = err.error.message;
           this.isLoading = false;
         }

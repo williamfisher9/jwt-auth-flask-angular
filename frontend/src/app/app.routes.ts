@@ -10,6 +10,7 @@ export const routes: Routes = [
     {path:'login', title: 'JWT AUTH - LOGIN', component: LoginComponent },
     {path:'register', title: 'JWT AUTH - REGISTER', component: RegisterComponent},
     {path:'users/:id/home', title: 'JWT AUTH - USER HOME', component: UserHomeComponent},
+    {path:'logout', title: 'JWT AUTH - USER HOME', redirectTo: '/login', pathMatch: 'full' },
     {path: '', redirectTo:'/home', pathMatch: 'full'},
     {path: '**', title: 'JWT AUTH - PAGE NOT FOUND', component: PageNotFoundComponent}
 ];

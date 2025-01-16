@@ -38,5 +38,10 @@ export class AppService {
     return this.http.post(`http://localhost:8080/api/v1/users/profile-image`, data, {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}})
     .pipe(map(res => res))
   }
+
+  getMenuItems() : Observable<any>{
+    return this.http.get(`http://localhost:8080/api/v1/users/get-menu-items`, window.localStorage.getItem('token') ? {headers: {'Authorization': `Bearer ${window.localStorage.getItem('token')}`}} : {})
+    .pipe(map(res => res))
+  }
 }
 

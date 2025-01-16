@@ -36,7 +36,7 @@ def initialize_database():
     if not menu_items:
         menu_item_1 = Menu("login", "fa-arrow-right-to-bracket", "/login", "public")
         menu_item_2 = Menu("register", "fa-user-plus", "/register", "public")
-        menu_item_3 = Menu("home", "fa-home", "/user-home", "USER_ROLE")
+        menu_item_3 = Menu("home", "fa-home", "", "USER_ROLE")
         menu_item_4 = Menu("users", "fa-users", "/settings", "USER_ROLE")
         menu_item_5 = Menu("logout", "fa-right-from-bracket", "/logout", "USER_ROLE")
         db.session.add_all([menu_item_1, menu_item_2, menu_item_3, menu_item_4, menu_item_5])

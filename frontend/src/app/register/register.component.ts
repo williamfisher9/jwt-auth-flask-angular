@@ -2,11 +2,12 @@ import { Component, input, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AppService } from '../services/app.service';
+import { MenuComponent } from "../menu/menu.component";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, MenuComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -34,14 +35,12 @@ export class RegisterComponent{
     .subscribe({
       next: res => {
         if(res.status == 201){
-          console.log(res)
           this.responseError = ''
           this.router.navigate(['/login'])
         }
       },
       error: err => {
         if (err.error.status != 201){
-          console.log(err.error)
           this.responseError = err.error.message;
           this.isLoading = false;
         }

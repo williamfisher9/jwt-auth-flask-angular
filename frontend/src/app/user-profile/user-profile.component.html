@@ -5,8 +5,8 @@
     </div>
 
     <div class="profile-details">
-        <p id="profile-name">{{user.first_name}}</p>
-        <img [src]="user.profile_img_name == null ? 'assets/avatar.jpg' : user.profile_img_name" id="profile-img" (click)="showProfileImgPicker()"/>
+        <p id="profile-name">{{user != null ? user.first_name : ''}}</p>
+        <img [src]="user != null ? user.profile_img_name : 'assets/avatar.jpg'" id="profile-img" (click)="showProfileImgPicker()"/>
     </div>
 </div>
 
